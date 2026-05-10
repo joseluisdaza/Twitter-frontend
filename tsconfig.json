@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022", "DOM"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "strict": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@smithy/smithy-client": ["./node_modules/@smithy/smithy-client"],
+      "@smithy/types": ["./node_modules/@smithy/types"]
+    }
+  },
+  "include": ["src/**/*"]
+}

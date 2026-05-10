@@ -1,0 +1,14 @@
+{
+  "name": "chirp-frontend",
+  "private": true,
+  "scripts": {
+    "build": "node build.mjs",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@smithy/smithy-client": "^3.0.1",
+    "@smithy/types": "^3.0.0",
+    "esbuild": "^0.25.0",
+    "typescript": "~5.9.3"
+  }
+}

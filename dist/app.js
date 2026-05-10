@@ -19,7 +19,7 @@ async function apiCall(method, path, body = null, auth = true) {
   try {
     const headers = { 'Content-Type': 'application/json' };
     if (auth && state.token) headers['Authorization'] = `Bearer ${state.token}`;
-    const res = await fetch(`${API_URL}${path}`, { method, headers, body: body ? JSON.stringify(body) : undefined });
+    const res = await fetch(`${API_URL}${path}`, { method, headers, body: body ? JSON.stringify(body) : undefined, cache: 'no-store' });
     if (res.status === 204) return null;
     return res.json();
   } catch (err) { showToast('Error de conexión', 'error'); return null; }
@@ -320,11 +320,11 @@ function init() {
   // Refresh timeline
   document.getElementById('btn-refresh-timeline').addEventListener('click', async () => {
     const btn = document.getElementById('btn-refresh-timeline');
-    btn.classList.add('spinning');
-    btn.textContent = '↻ Actualizando…';
+    btn.disabled = true;
+    btn.style.opacity = '0.6';
     await loadTimeline();
-    btn.classList.remove('spinning');
-    btn.textContent = '↻ Actualizar';
+    btn.disabled = false;
+    btn.style.opacity = '1';
   });
 
   // Chirp

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🐦 Chirp</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <div class="header-inner">
+      <div class="logo">🐦 Chirp</div>
+      <div id="auth-status" class="hidden">
+        <span id="user-display"></span>
+        <button id="btn-logout">Cerrar sesión</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- AUTH -->
+  <section id="auth-section">
+    <div class="auth-container">
+      <div class="auth-tabs">
+        <button class="auth-tab active" data-tab="login">Iniciar Sesión</button>
+        <button class="auth-tab" data-tab="register">Registrarse</button>
+      </div>
+      <div id="tab-login" class="auth-panel">
+        <form id="form-login">
+          <input type="email" id="login-email" placeholder="Email" required>
+          <input type="password" id="login-password" placeholder="Contraseña" required>
+          <button type="submit" class="btn-primary">Entrar</button>
+        </form>
+      </div>
+      <div id="tab-register" class="auth-panel hidden">
+        <form id="form-register">
+          <input type="email"    id="reg-email"        placeholder="Email" required>
+          <input type="password" id="reg-password"     placeholder="Contraseña (mín. 8 chars)" required>
+          <input type="text"     id="reg-username"     placeholder="Username" required>
+          <input type="text"     id="reg-displayname"  placeholder="Nombre a mostrar">
+          <button type="submit" class="btn-primary">Registrarse</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- APP -->
+  <section id="app-section" class="hidden">
+    <div class="app-layout">
+
+      <nav class="sidebar">
+        <button class="nav-btn active" data-view="timeline">🏠 Timeline</button>
+        <button class="nav-btn" data-view="profile">👤 Mi Perfil</button>
+        <button class="nav-btn" data-view="search">🔍 Buscar</button>
+      </nav>
+
+      <main class="content">
+
+        <!-- TIMELINE -->
+        <div id="view-timeline" class="view active">
+          <div class="card create-chirp">
+            <textarea id="chirp-content" placeholder="¿Qué estás pensando?" maxlength="280" rows="3"></textarea>
+            <div class="create-footer">
+              <span id="chirp-counter">280</span>
+              <button id="btn-create-chirp" class="btn-primary">Chirpear</button>
+            </div>
+          </div>
+          <div id="timeline-list"></div>
+        </div>
+
+        <!-- PROFILE -->
+        <div id="view-profile" class="view">
+          <div id="profile-info" class="card"></div>
+          <div class="card">
+            <h3>Editar Perfil</h3>
+            <input type="text" id="edit-displayname" placeholder="Nombre a mostrar">
+            <input type="text" id="edit-bio" placeholder="Bio" maxlength="160">
+            <button id="btn-update-profile" class="btn-primary">Actualizar</button>
+          </div>
+          <div class="section-title">Mis Chirps</div>
+          <div id="my-chirps-list"></div>
+        </div>
+
+        <!-- SEARCH -->
+        <div id="view-search" class="view">
+          <div class="card">
+            <div class="search-row">
+              <input type="text" id="search-username" placeholder="Buscar usuario por username...">
+              <button id="btn-search" class="btn-primary">Buscar</button>
+            </div>
+          </div>
+          <div id="search-result"></div>
+        </div>
+
+      </main>
+    </div>
+  </section>
+
+  <!-- TOAST -->
+  <div id="toast" class="toast hidden"></div>
+
+  <!-- MODAL (likes / confirmations) -->
+  <div id="modal" class="modal hidden">
+    <div class="modal-overlay"></div>
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 id="modal-title"></h3>
+        <button id="modal-close">✕</button>
+      </div>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
+  <script src="runtime-config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

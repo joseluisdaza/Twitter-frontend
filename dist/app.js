@@ -148,6 +148,7 @@ async function loadComments(chirpId, section) {
   section.innerHTML = '';
   const data = await api.getChirpComments(chirpId);
   const comments = data?.comments || [];
+  await resolveUsers(comments);
   comments.forEach(c => addCommentEl(c, chirpId, section));
   const addRow = document.createElement('div');
   addRow.className = 'add-comment';
@@ -161,9 +162,15 @@ async function loadComments(chirpId, section) {
   });
   section.appendChild(addRow);
 }
+function commentAuthor(userId) {
+  if (userId === state.userId) return `<strong>${state.displayName}</strong> <span>@${state.username}</span>`;
+  const c = userCache[userId];
+  if (c) return `<strong>${c.displayName}</strong> <span>@${c.username}</span>`;
+  return `<span>@${userId.slice(0, 10)}…</span>`;
+}
 function addCommentEl(c, chirpId, section, before = null) {
   const div = document.createElement('div'); div.className = 'comment-card';
-  div.innerHTML = `<div class="comment-header"><span>@${c.userId.slice(0,10)}…</span><span>${fmt(c.createdAt || new Date().toISOString())}</span></div>
+  div.innerHTML = `<div class="comment-header"><span>${commentAuthor(c.userId)}</span><span>${fmt(c.createdAt || new Date().toISOString())}</span></div>
     <div>${c.content}</div>
     ${c.userId === state.userId ? `<button class="btn-icon" style="font-size:11px">Borrar</button>` : ''}`;
   if (c.userId === state.userId)

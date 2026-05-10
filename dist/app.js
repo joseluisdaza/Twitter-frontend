@@ -317,6 +317,16 @@ function init() {
     });
   });
 
+  // Refresh timeline
+  document.getElementById('btn-refresh-timeline').addEventListener('click', async () => {
+    const btn = document.getElementById('btn-refresh-timeline');
+    btn.classList.add('spinning');
+    btn.textContent = '↻ Actualizando…';
+    await loadTimeline();
+    btn.classList.remove('spinning');
+    btn.textContent = '↻ Actualizar';
+  });
+
   // Chirp
   document.getElementById('btn-create-chirp').addEventListener('click', handleCreateChirp);
   document.getElementById('chirp-content').addEventListener('keydown', e => {

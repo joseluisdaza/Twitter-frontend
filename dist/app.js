@@ -240,11 +240,19 @@ async function handleCreateChirp() {
   if (res?.chirpId) { document.getElementById('chirp-content').value = ''; document.getElementById('chirp-counter').textContent = '280'; showToast('¡Chirp publicado!'); loadTimeline(); }
   else showToast('Error al publicar', 'error');
 }
+async function resolveUsers(chirps) {
+  const unknownIds = [...new Set(chirps.map(c => c.userId).filter(id => id !== state.userId && !userCache[id]))];
+  await Promise.all(unknownIds.map(async id => {
+    const user = await api.getUser(id);
+    if (user) userCache[id] = { username: user.username, displayName: user.displayName };
+  }));
+}
 async function loadTimeline() {
   const list = document.getElementById('timeline-list');
   list.innerHTML = '<p class="empty-msg">Cargando…</p>';
   const data = await api.getTimeline(); const chirps = data?.chirps || []; list.innerHTML = '';
   if (!chirps.length) { list.innerHTML = '<p class="empty-msg">Sin chirps. ¡Sigue a alguien o publica algo!</p>'; return; }
+  await resolveUsers(chirps);
   chirps.forEach(c => renderChirp(c, list));
 }
 async function loadProfile() {

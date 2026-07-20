@@ -64,6 +64,9 @@ textarea{resize:vertical}
 .chirp-content{line-height:1.5;margin-bottom:12px;word-break:break-word}
 .chirp-actions{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
 .hidden-badge{background:var(--border);color:var(--muted);font-size:11px;padding:2px 8px;border-radius:999px;margin-left:8px}
+.toxicity-chip{display:inline-flex;align-items:center;font-size:12px;font-weight:600;padding:4px 10px;border-radius:999px;margin:-4px 0 10px 0}
+.toxicity-low{background:rgba(0,186,124,.12);color:#00ba7c;border:1px solid rgba(0,186,124,.35)}
+.toxicity-high{background:rgba(244,33,46,.12);color:#f4212e;border:1px solid rgba(244,33,46,.35)}
 
 /* COMMENTS */
 .comments-section{margin-top:12px;border-top:1px solid var(--border);padding-top:12px;display:flex;flex-direction:column;gap:8px}

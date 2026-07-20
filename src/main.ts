@@ -21,6 +21,8 @@ import type {
 /** Lambda uses `isHidden`; Smithy spec uses `hidden`. createdAt comes as ISO string. */
 type ApiChirp = Omit<Chirp, 'hidden' | 'createdAt'> & {
   isHidden?: boolean;
+  isToxic?: boolean;
+  toxicityScore?: number | null;
   createdAt: string;
 };
 
@@ -148,6 +150,12 @@ function authorHtml(chirp: ApiChirp): string {
 // ── RENDER CHIRP ───────────────────────────────────────────────────────────────
 function renderChirp(chirp: ApiChirp, container: HTMLElement): void {
   const isOwn = chirp.userId === state.userId;
+  const toxicityPct = typeof chirp.toxicityScore === 'number'
+    ? Math.round(Math.max(0, Math.min(1, chirp.toxicityScore)) * 100)
+    : null;
+  const toxicityHtml = toxicityPct === null
+    ? ''
+    : `<div class="toxicity-chip ${toxicityPct >= 50 ? 'toxicity-high' : 'toxicity-low'}">Toxicidad: ${toxicityPct}%</div>`;
   const div = document.createElement('div');
   div.className = 'chirp-card';
   div.innerHTML = `
@@ -156,6 +164,7 @@ function renderChirp(chirp: ApiChirp, container: HTMLElement): void {
       <span class="chirp-date">${fmt(chirp.createdAt)}</span>
     </div>
     <div class="chirp-content">${chirp.content}${chirp.isHidden ? '<span class="hidden-badge">Oculto</span>' : ''}</div>
+    ${toxicityHtml}
     <div class="chirp-actions">
       <button class="btn-icon btn-like">♥ <span>${chirp.likesCount ?? 0}</span></button>
       <button class="btn-icon btn-cmt">💬 <span>${chirp.commentsCount ?? 0}</span></button>
